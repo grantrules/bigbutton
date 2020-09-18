@@ -18,5 +18,5 @@ module.exports = {
       fileName: '../build/manifest.json',
     }),
   ],
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 };
