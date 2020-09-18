@@ -8,7 +8,7 @@ function Register() {
   const [values, setValues] = React.useState({
     email: '', password: '', passwordconfirm: '', name: '', school: '',
   });
-  const [registerResult, register] = useMutation(REGISTER_QUERY);
+  const [/* registerResult */, register] = useMutation(REGISTER_QUERY);
 
   const handleChange = (name) => (e) => { setValues({ ...values, [name]: e.target.value }); };
 

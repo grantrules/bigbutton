@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { useQuery, useMutation } from 'urql';
 
@@ -10,7 +11,7 @@ function CreateClass() {
       name, code
     }
   }`;
-  const [createClassResult, createClass] = useMutation(CREATE_CLASS_MUTATION);
+  const [/* createClassResult */, createClass] = useMutation(CREATE_CLASS_MUTATION);
   const [name, setName] = useState('');
 
   const handleSubmit = (e) => {
@@ -48,13 +49,20 @@ function Class({ name, code }) {
     </li>
   );
 }
+Class.propTypes = {
+  name: PropTypes.string,
+  code: PropTypes.string,
+};
+Class.defaultProps = {
+  name: '',
+  code: '',
+};
 
 function MyComponent() {
-  const [{ data, fetching, error }, reexecuteQuery] = useQuery({ query: HOMEPAGE_QUERY });
+  const [{ data, fetching, error }/* , reexecuteQuery */] = useQuery({ query: HOMEPAGE_QUERY });
 
   if (fetching) return 'Loading...';
   if (error) return 'Something Bad Happened';
-  console.log(data);
   return (
     <ul>
       {data.findMyClasses.map((cla) => (

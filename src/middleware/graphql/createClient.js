@@ -7,6 +7,7 @@ export default (req, newFetch) => {
 
   const ssr = ssrExchange({
     isClient: !isServerSide,
+    // eslint-disable-next-line no-underscore-dangle
     initialState: !isServerSide ? window.__URQL_DATA__ : undefined,
   });
   const client = createClient({

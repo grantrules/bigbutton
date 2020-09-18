@@ -6,7 +6,7 @@ const LOGIN_QUERY = 'query Login($email: String, $password: String) { login(emai
 function Login() {
   const [values, setValues] = React.useState({ email: '', password: '' });
 
-  const [loginResult, login] = useMutation(LOGIN_QUERY);
+  const [/* loginResult */, login] = useMutation(LOGIN_QUERY);
 
   const handleChange = (name) => (e) => { setValues({ ...values, [name]: e.target.value }); };
 
@@ -22,7 +22,6 @@ function Login() {
 
       <input
         type="text"
-        autoFocus="autofocus"
         value={values.email}
         onChange={handleChange('email')}
         id="email"
