@@ -1,30 +1,20 @@
-import { graphql } from 'graphql';
-import { GraphQLClient } from 'graphql-hooks';
-import memCache from 'graphql-hooks-memcache';
-import schema from '../../schema';
+import {
+  createClient, dedupExchange, cacheExchange, fetchExchange, ssrExchange,
+} from 'urql';
 
-let graphQLClient = null;
+export default (req, newFetch) => {
+  const isServerSide = !process.browser;
 
-const notFetch = (ctx) => (_, { body }) => {
-  const { query } = JSON.parse(body);
-  const result = { ok: true, json() { return Promise.resolve(this.data); }, data: {} };
+  const ssr = ssrExchange({
+    isClient: !isServerSide,
+    initialState: !isServerSide ? window.__URQL_DATA__ : undefined,
+  });
+  const client = createClient({
+    url: '/graphql',
+    suspense: isServerSide, // This activates urql's Suspense mode on the server-side
+    exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
+    fetch: newFetch || fetch,
+  });
 
-  return graphql(schema, query, {}, ctx).then((res) => { result.data = res; return result; });
-};
-
-const create = (initialState = {}, ctx = {}) => new GraphQLClient({
-  ssrMode: !process.browser,
-  url: '/graphql',
-  cache: memCache({ initialState }),
-    fetch: process.browser ? fetch.bind() : notFetch(ctx) // eslint-disable-line
-});
-
-export default (initialState, ctx) => {
-  if (!process.browser) {
-    return create(initialState, ctx);
-  }
-  if (!graphQLClient) {
-    graphQLClient = create(initialState);
-  }
-  return graphQLClient;
+  return { ssr, client };
 };

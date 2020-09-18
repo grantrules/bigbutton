@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useManualQuery } from 'graphql-hooks';
+import { useMutation } from 'urql';
 
 const REGISTER_QUERY = 'query Register($email: String, $password: String, $name: String, $school: String) { register(email:$email, password:$password, name:$name, school:$school) }';
 
@@ -8,22 +8,18 @@ function Register() {
   const [values, setValues] = React.useState({
     email: '', password: '', passwordconfirm: '', name: '', school: '',
   });
-  const [register] = useManualQuery(REGISTER_QUERY);
+  const [registerResult, register] = useMutation(REGISTER_QUERY);
 
   const handleChange = (name) => (e) => { setValues({ ...values, [name]: e.target.value }); };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await register({
-      variables: {
-        email: values.email,
-        password: values.password,
-        name: values.name,
-        school: values.school,
-      },
+    register({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      school: values.school,
     });
-
-    // alert(data);
   };
 
   return (

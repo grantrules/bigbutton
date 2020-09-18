@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useQuery, useMutation } from 'graphql-hooks';
+import { useQuery, useMutation } from 'urql';
 
 const HOMEPAGE_QUERY = 'query { findMyClasses { id, name, code } }';
 
@@ -10,12 +10,12 @@ function CreateClass() {
       name, code
     }
   }`;
-  const [createClass] = useMutation(CREATE_CLASS_MUTATION);
+  const [createClassResult, createClass] = useMutation(CREATE_CLASS_MUTATION);
   const [name, setName] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createClass({ variables: { name } });
+    createClass({ name });
   };
 
   return (
@@ -50,16 +50,16 @@ function Class({ name, code }) {
 }
 
 function MyComponent() {
-  const { loading, error, data } = useQuery(HOMEPAGE_QUERY, {});
+  const [{ data, fetching, error }, reexecuteQuery] = useQuery({ query: HOMEPAGE_QUERY });
 
-  if (loading) return 'Loading...';
+  if (fetching) return 'Loading...';
   if (error) return 'Something Bad Happened';
   console.log(data);
   return (
-    <h1>
+    <ul>
       {data.findMyClasses.map((cla) => (
         <Class key={cla.id} name={cla.name} code={cla.code} />))}
-    </h1>
+    </ul>
   );
 }
 

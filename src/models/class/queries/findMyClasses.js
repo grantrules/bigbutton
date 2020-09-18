@@ -1,5 +1,5 @@
 import {
-  GraphQLList, GraphQLBoolean, GraphQLString,
+  GraphQLList,
 } from 'graphql';
 
 import ClassModel from '../class';
