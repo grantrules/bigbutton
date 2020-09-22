@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useQuery, useMutation } from 'urql';
+import { Link } from 'react-router-dom';
 
 const HOMEPAGE_QUERY = 'query { findMyClasses { id, name, code } }';
 
@@ -40,20 +41,22 @@ function TeacherPage() {
   );
 }
 
-function Class({ name, code }) {
+function Class({ id, name, code }) {
   return (
     <li>
-      {name}
+      <Link to={`/class/${id}`}>{name}</Link>
       {' '}
       {code}
     </li>
   );
 }
 Class.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string,
   code: PropTypes.string,
 };
 Class.defaultProps = {
+  id: '',
   name: '',
   code: '',
 };
@@ -61,12 +64,12 @@ Class.defaultProps = {
 function MyComponent() {
   const [{ data, fetching, error }/* , reexecuteQuery */] = useQuery({ query: HOMEPAGE_QUERY });
 
-  if (fetching) return 'Loading...';
-  if (error) return 'Something Bad Happened';
+  if (fetching) return (<>Loading...</>);
+  if (error) return (<>Something Bad Happened</>);
   return (
     <ul>
       {data.findMyClasses.map((cla) => (
-        <Class key={cla.id} name={cla.name} code={cla.code} />))}
+        <Class key={cla.id} id={cla.id} name={cla.name} code={cla.code} />))}
     </ul>
   );
 }

@@ -15,5 +15,5 @@ export default {
   resolve:
     async (v, args, ctx) => ClassModel.create({
       TeacherId: ctx.session.teacherId, name: args.name, code: generateId(),
-    }).catch(e => console.log(e)),
+    }).catch((e) => console.log(e)),
 };

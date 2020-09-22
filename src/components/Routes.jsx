@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Index from './pages/Index';
 import Private from './pages/Private';
 import Register from './pages/Register';
+import Class from './pages/Class';
 
 export default () => (
   <Switch>
@@ -12,5 +13,6 @@ export default () => (
     <Route path="/login" component={Login} />
     <Route path="/private" component={Private} />
     <Route path="/register" component={Register} />
+    <Route path="/class/:classId" component={Class} />
   </Switch>
 );
