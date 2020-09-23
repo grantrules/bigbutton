@@ -15,6 +15,12 @@ sequelize.idType = {
   defaultValue: Sequelize.UUIDV4,
 };
 
+sequelize.autoIncType = {
+  type: Sequelize.INTEGER,
+  autoIncrement: true,
+  primaryKey: true,
+};
+
 /* Import and create all models. */
 require('./models/student/init').default(sequelize);
 require('./models/button/init').default(sequelize);

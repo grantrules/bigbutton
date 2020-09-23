@@ -1,4 +1,5 @@
 import {
+  GraphQLInt,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
@@ -7,7 +8,7 @@ const ButtonType = new GraphQLObjectType({
   name: 'Button',
   fields: {
     id: {
-      type: GraphQLString,
+      type: GraphQLInt,
     },
     color: {
       type: GraphQLString,

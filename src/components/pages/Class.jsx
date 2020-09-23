@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useQuery, useMutation } from 'urql';
 import { useParams } from 'react-router';
 
-const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, Students { id, name } } }';
+const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, Students { id, name }, Buttons { id, color } } }';
 
 function CreateStudent({ classId }) {
   const CREATE_STUDENT_MUTATION = `mutation CreateStudent($name: String!, $classId: String!) {
@@ -43,10 +43,11 @@ function CreateButton({ classId }) {
     }
   }`;
   const [/* createClassResult */, createButton] = useMutation(CREATE_BUTTON_MUTATION);
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState('red');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(color);
     createButton({ color, classId });
   };
 
@@ -98,6 +99,29 @@ Student.defaultProps = {
   name: '',
 };
 
+
+
+function Button({ id, color }) {
+  return (
+    <>
+      <button style={{ backgroundColor: color }} type="button">
+        {color}
+        button
+      </button>
+
+    </>
+  );
+}
+
+Button.propTypes = {
+  id: PropTypes.string,
+  color: PropTypes.string,
+};
+Button.defaultProps = {
+  id: '',
+  color: '',
+};
+
 function MyComponent({ classId }) {
   const [{ data, fetching, error }/* , reexecuteQuery */] = useQuery({
     query: HOMEPAGE_QUERY, variables: { classId },
@@ -108,6 +132,11 @@ function MyComponent({ classId }) {
   return (
     <>
       <h1>{data.findMyClass.name}</h1>
+
+      <ul>
+        {(data.findMyClass.Buttons || [])
+          .map(({ id, color }) => (<Button id={id} color={color} key={id} />))}
+      </ul>
 
       <ul>
         {(data.findMyClass.Students || [])

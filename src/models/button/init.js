@@ -3,7 +3,7 @@ import ButtonModel from './button';
 
 export default (sequelize) => {
   ButtonModel.init({
-    id: sequelize.idType,
+    id: sequelize.autoIncType,
     color: { type: DataTypes.TEXT },
   }, {
     // Other model options go here

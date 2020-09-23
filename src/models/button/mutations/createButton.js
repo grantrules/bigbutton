@@ -12,5 +12,5 @@ export default {
     color: { type: GraphQLString },
   },
   resolve:
-    async (v, args) => ButtonModel.create({ color: args.name, ClassId: args.classId }),
+    async (v, args) => ButtonModel.create({ color: args.color, ClassId: args.classId }),
 };
