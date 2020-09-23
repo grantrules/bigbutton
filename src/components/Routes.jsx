@@ -7,7 +7,7 @@ import Index from './pages/Index';
 import Private from './pages/Private';
 import Register from './pages/Register';
 import Class from './pages/Class';
-import Auth from './auth/Auth';
+import AuthProvider from './auth/AuthProvider';
 import Authorized from './auth/Authorized';
 
 const VERIFY_QUERY = 'query Verify { verify }';
@@ -17,7 +17,7 @@ export default () => {
   if (!data) return (<></>);
   return (
     <div className="app">
-      <Auth activeSession={!!data.verify}>
+      <AuthProvider activeSession={!!data.verify}>
         <Switch>
           <Route exact path="/" component={Index} />
           <Route path="/login" component={Login} />
@@ -27,7 +27,7 @@ export default () => {
           <Route path="/register" component={Register} />
           <Route path="/class/:classId" component={Class} />
         </Switch>
-      </Auth>
+      </AuthProvider>
     </div>
   );
 };

@@ -7,7 +7,7 @@ const LOGIN_QUERY = 'mutation Login($email: String, $password: String) { login(e
 
 const LOGOUT_QUERY = 'query Logout { logout }';
 
-function Auth({ activeSession, children }) {
+function AuthProvider({ activeSession, children }) {
   const [{ activeUser, loginFailed }, setUserState] = useState({
     activeUser: activeSession,
     loginFailed: false,
@@ -36,9 +36,9 @@ function Auth({ activeSession, children }) {
   return (<AuthContext.Provider value={context}>{children}</AuthContext.Provider>);
 }
 
-Auth.propTypes = {
+AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
   activeSession: PropTypes.bool.isRequired,
 };
 
-export default Auth;
+export default AuthProvider;
