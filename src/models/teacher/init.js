@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { hash } from '../../utils/hash';
 import TeacherModel from './teacher';
+import Class from '../class/class';
 
 export default (sequelize) => {
   TeacherModel.init({
@@ -15,7 +16,7 @@ export default (sequelize) => {
     sequelize, // We need to pass the connection instance
     modelName: 'Teacher', // We need to choose the model name
   });
-
+  TeacherModel.hasMany(Class, { as: 'classes' });
   hash('doink')
     .then((h) => TeacherModel.create({
       email: 'gharding@gmail.com',

@@ -16,7 +16,11 @@ sequelize.idType = {
 };
 
 /* Import and create all models. */
-require('./models/teacher/init').default(sequelize);
+require('./models/student/init').default(sequelize);
+require('./models/button/init').default(sequelize);
+
 require('./models/class/init').default(sequelize);
+
+require('./models/teacher/init').default(sequelize);
 
 module.exports = sequelize;

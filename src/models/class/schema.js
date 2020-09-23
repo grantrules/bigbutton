@@ -1,7 +1,10 @@
 import {
+  GraphQLList,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
+
+import StudentType from '../student/schema';
 
 const ClassType = new GraphQLObjectType({
   name: 'Class',
@@ -14,6 +17,12 @@ const ClassType = new GraphQLObjectType({
     },
     code: {
       type: GraphQLString,
+    },
+    Students: {
+      type: GraphQLList(StudentType),
+    },
+    Buttons: {
+      type: GraphQLList(StudentType),
     },
   },
 });

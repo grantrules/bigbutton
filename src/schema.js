@@ -13,6 +13,8 @@ import classMutations from './models/class/mutations';
 import studentQueries from './models/student/queries';
 import studentMutations from './models/student/mutations';
 
+import buttonMutations from './models/button/mutations';
+
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
@@ -43,6 +45,7 @@ export default new GraphQLSchema({
       ...teacherMutations,
       ...classMutations,
       ...studentMutations,
+      ...buttonMutations,
     },
   }),
 });

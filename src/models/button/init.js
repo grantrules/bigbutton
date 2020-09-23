@@ -1,13 +1,13 @@
 import { DataTypes } from 'sequelize';
-import StudentModel from './student';
+import ButtonModel from './button';
 
 export default (sequelize) => {
-  StudentModel.init({
+  ButtonModel.init({
     id: sequelize.idType,
-    name: { type: DataTypes.TEXT },
+    color: { type: DataTypes.TEXT },
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
-    modelName: 'Student', // We need to choose the model name
+    modelName: 'Button', // We need to choose the model name
   });
 };

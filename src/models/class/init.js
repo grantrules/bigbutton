@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
-import Teacher from '../teacher/teacher';
+import Student from '../student/student';
+import Button from '../button/button';
 import ClassModel from './class';
 
 export default (sequelize) => {
@@ -12,5 +13,6 @@ export default (sequelize) => {
     sequelize, // We need to pass the connection instance
     modelName: 'Class', // We need to choose the model name
   });
-  ClassModel.belongsTo(Teacher);
+  ClassModel.hasMany(Student);
+  ClassModel.hasMany(Button);
 };

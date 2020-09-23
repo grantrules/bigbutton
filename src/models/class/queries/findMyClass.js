@@ -4,6 +4,8 @@ import {
 
 import ClassModel from '../class';
 import ClassType from '../schema';
+import Student from '../../student/student';
+import Button from '../../button/button';
 
 export default {
   type: ClassType,
@@ -13,5 +15,6 @@ export default {
   resolve:
     async (v, { classId }, ctx) => ClassModel.findOne({
       where: { id: classId, TeacherId: ctx.session.teacherId },
-    }).then((res) => { console.log(res); return res; }),
+      include: [Button, Student],
+    }),
 };
