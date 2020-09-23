@@ -47,7 +47,6 @@ function CreateButton({ classId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(color);
     createButton({ color, classId });
   };
 
@@ -99,12 +98,10 @@ Student.defaultProps = {
   name: '',
 };
 
-
-
 function Button({ id, color }) {
   return (
     <>
-      <button style={{ backgroundColor: color }} type="button">
+      <button id={`button${id}`} style={{ backgroundColor: color }} type="button">
         {color}
         button
       </button>
