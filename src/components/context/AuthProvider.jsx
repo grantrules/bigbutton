@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'urql';
-import AuthContext from '../context/AuthContext';
 
 const LOGIN_QUERY = 'mutation Login($email: String, $password: String) { login(email:$email, password:$password) }';
 
 const LOGOUT_QUERY = 'query Logout { logout }';
+
+const AuthContext = React.createContext({
+  activeUser: null,
+  login: () => {},
+  invalidate: () => {},
+  loginFailed: false,
+});
 
 function AuthProvider({ activeSession, children }) {
   const [{ activeUser, loginFailed }, setUserState] = useState({
@@ -41,4 +47,4 @@ AuthProvider.propTypes = {
   activeSession: PropTypes.bool.isRequired,
 };
 
-export default AuthProvider;
+export { AuthContext, AuthProvider };

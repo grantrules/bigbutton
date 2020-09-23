@@ -7,7 +7,7 @@ import Index from './pages/Index';
 import Private from './pages/Private';
 import Register from './pages/Register';
 import Class from './pages/Class';
-import AuthProvider from './auth/AuthProvider';
+import { AuthProvider } from './context/AuthProvider';
 import Authorized from './auth/Authorized';
 
 const VERIFY_QUERY = 'query Verify { verify }';
@@ -21,11 +21,12 @@ export default () => {
         <Switch>
           <Route exact path="/" component={Index} />
           <Route path="/login" component={Login} />
-          <Authorized>
-            <Route path="/private" component={Private} />
-          </Authorized>
           <Route path="/register" component={Register} />
           <Route path="/class/:classId" component={Class} />
+          <Authorized>
+            {/* authorized routes must be last */}
+            <Route path="/private" component={Private} />
+          </Authorized>
         </Switch>
       </AuthProvider>
     </div>

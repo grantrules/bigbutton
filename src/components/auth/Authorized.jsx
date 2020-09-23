@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import AuthContext from '../context/AuthContext';
+import { AuthContext } from '../context/AuthProvider';
 
 function Authorized({ anonymous, both, children }) {
   const { activeUser } = useContext(AuthContext);
