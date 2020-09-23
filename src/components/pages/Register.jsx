@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useMutation } from 'urql';
+import TextInput from '../widgets/TextInput';
 
 const REGISTER_QUERY = 'query Register($email: String, $password: String, $name: String, $school: String) { register(email:$email, password:$password, name:$name, school:$school) }';
 
@@ -23,30 +24,33 @@ function Register() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <form onSubmit={handleSubmit} className="register">
+      <TextInput
         value={values.email}
         onChange={handleChange('email')}
+        label="Email"
         type="email"
         id="email"
-        placeholder="Email Address"
+        placeholder="teacher@school.edu"
         required
       />
-      <input
+      <TextInput
         value={values.name}
         onChange={handleChange('name')}
         id="name"
-        placeholder="Your Name"
+        label="Your Name"
+        placeholder="Ms. Wagner"
         required
       />
-      <input
+      <TextInput
         value={values.school}
         onChange={handleChange('school')}
         id="school"
-        placeholder="School"
+        label="School"
+        placeholder="Bayside High School"
         required
       />
-      <input
+      <TextInput
         value={values.password}
         onChange={handleChange('password')}
         id="password"
@@ -56,16 +60,15 @@ function Register() {
         margin="normal"
         required
       />
-      <input
+      <TextInput
         value={values.passwordconfirm}
         onChange={handleChange('passwordconfirm')}
         id="passwordconfirm"
         label="Confirm Password"
-        placeholder="Confirm Password"
+        placeholder="Password"
         type="password"
         required
       />
-      <br />
 
       <button type="submit">
         Register

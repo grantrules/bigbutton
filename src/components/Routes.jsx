@@ -8,11 +8,13 @@ import Register from './pages/Register';
 import Class from './pages/Class';
 
 export default () => (
-  <Switch>
-    <Route exact path="/" component={Index} />
-    <Route path="/login" component={Login} />
-    <Route path="/private" component={Private} />
-    <Route path="/register" component={Register} />
-    <Route path="/class/:classId" component={Class} />
-  </Switch>
+  <div className="app">
+    <Switch>
+      <Route exact path="/" component={Index} />
+      <Route path="/login" component={Login} />
+      <Route path="/private" component={Private} />
+      <Route path="/register" component={Register} />
+      <Route path="/class/:classId" component={Class} />
+    </Switch>
+  </div>
 );

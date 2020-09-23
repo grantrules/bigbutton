@@ -37,6 +37,11 @@ app.use(
   express.static('dist'),
 );
 
+app.use(
+  '/public',
+  express.static('public'),
+);
+
 const notFetch = (ctx) => (_, { body }) => {
   const { query } = JSON.parse(body);
   const result = { ok: true, json() { return Promise.resolve(this.data); }, data: {} };
