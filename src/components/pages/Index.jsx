@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Authorized from '../auth/Authorized';
 
 export default () => (
   <>
@@ -10,7 +11,9 @@ export default () => (
       <ul>
         <li><Link to="/login">Login</Link></li>
         <li><Link to="/register">Register</Link></li>
-        <li><Link to="/private">Private</Link></li>
+        <Authorized>
+          <li><Link to="/private">Private</Link></li>
+        </Authorized>
       </ul>
     </nav>
   </>

@@ -1,6 +1,7 @@
-import login from './login';
 import me from './me';
+import verify from './verify';
 
 export default {
-  login, me,
+  me,
+  verify,
 };

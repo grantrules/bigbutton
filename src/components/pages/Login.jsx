@@ -1,12 +1,11 @@
-import React from 'react';
-import { useMutation } from 'urql';
-
-const LOGIN_QUERY = 'query Login($email: String, $password: String) { login(email:$email, password:$password) }';
+import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router';
+import Authorized from '../auth/Authorized';
+import AuthContext from '../context/AuthContext';
 
 function Login() {
-  const [values, setValues] = React.useState({ email: '', password: '' });
-
-  const [/* loginResult */, login] = useMutation(LOGIN_QUERY);
+  const [values, setValues] = useState({ email: '', password: '' });
+  const { login, loginFailed } = useContext(AuthContext);
 
   const handleChange = (name) => (e) => { setValues({ ...values, [name]: e.target.value }); };
 
@@ -19,6 +18,11 @@ function Login() {
   };
   return (
     <form onSubmit={submitForm}>
+      <Authorized>
+        <Redirect to="/" />
+      </Authorized>
+
+      {loginFailed && 'Failed'}
 
       <input
         type="text"
