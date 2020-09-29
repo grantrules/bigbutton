@@ -63,6 +63,23 @@ function CreateButton({ classId }) {
   );
 }
 
+function UpdateButtonColor({ classId, buttonId, onUpdate }) {
+  const UPDATE_COLOR_MUTATION = `mutation UpdateColor($color: String!, $classId: String!, $buttonId: Int!) {
+    updateColor(color: $color, classId: $classId, buttonId: $buttonId)
+  }`;
+  const [/* createClassResult */, updateColor] = useMutation(UPDATE_COLOR_MUTATION);
+
+  const setColor = (color) => updateColor({ color, classId, buttonId }).then(() => onUpdate(color));
+
+  return (
+    <select onChange={(e) => setColor(e.target.value)}>
+      <option value="red">Red</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+    </select>
+  );
+}
+
 CreateButton.propTypes = {
   classId: PropTypes.string,
 };
@@ -106,6 +123,7 @@ function Student({ name, children }) {
 }
 Student.propTypes = {
   name: PropTypes.string,
+  children: PropTypes.node,
 };
 Student.defaultProps = {
   name: '',
@@ -123,6 +141,18 @@ function MyStudent({ id, classId, name }) {
   );
 }
 
+function DeleteButton({ id, classId, onDelete }) {
+  const DELETE_BUTTON_MUTATION = `mutation DeleteButton($buttonId: Int!, $classId: String!) {
+    deleteButton(buttonId: $buttonId, classId: $classId)
+  }`;
+  const [/* createClassResult */, deleteButton] = useMutation(DELETE_BUTTON_MUTATION);
+
+  const click = () => {
+    deleteButton({ buttonId: id, classId }).then(() => onDelete());
+  };
+  return (<button type="button" onClick={click}>delete</button>);
+}
+
 function Button({ id, color }) {
   return (
     <>
@@ -135,6 +165,21 @@ function Button({ id, color }) {
   );
 }
 
+function MyButton({ id, currentColor, classId }) {
+  const [deleted, setDeleted] = useState(false);
+  const [color, setColor] = useState(currentColor);
+  if (deleted) {
+    return (<></>);
+  }
+  return (
+    <>
+      <Button id={id} color={color} />
+      <DeleteButton id={id} classId={classId} onDelete={() => setDeleted(true)} />
+      <UpdateButtonColor classId={classId} buttonId={id} onUpdate={setColor} />
+
+    </>
+  );
+}
 Button.propTypes = {
   id: PropTypes.string,
   color: PropTypes.string,
@@ -157,7 +202,14 @@ function MyComponent({ classId }) {
 
       <ul>
         {(data.findMyClass.Buttons || [])
-          .map(({ id, color }) => (<Button id={id} color={color} key={id} />))}
+          .map(({ id, color }) => (
+            <MyButton
+              id={id}
+              classId={data.findMyClass.id}
+              currentColor={color}
+              key={id}
+            />
+          ))}
       </ul>
 
       <ul>
