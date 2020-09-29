@@ -32,6 +32,7 @@
     "react-ssr-prepass": "^1.2.1",
     "redis": "^3.0.2",
     "sequelize": "^6.3.5",
+    "subscriptions-transport-ws": "^0.9.18",
     "urql": "^1.10.1"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "eslint": "^7.9.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.2",
