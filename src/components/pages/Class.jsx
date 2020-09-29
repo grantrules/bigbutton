@@ -6,8 +6,9 @@ import { useParams } from 'react-router';
 
 import { MyButton } from '../widgets/Button';
 import { MyStudent } from '../widgets/Student';
+import { useI18N } from '../context/I18NProvider';
 
-const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, Students { id, name }, Buttons { id, color } } }';
+const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, code, Students { id, name }, Buttons { id, color } } }';
 
 function CreateStudent({ classId }) {
   const CREATE_STUDENT_MUTATION = `mutation CreateStudent($name: String!, $classId: String!) {
@@ -75,9 +76,12 @@ CreateButton.defaultProps = {
 
 function ClassPage() {
   const { classId } = useParams();
+
+  const { t } = useI18N();
+
   return (
     <>
-      <h1>Class</h1>
+      <h1>{t('Class')}</h1>
       <div>{classId}</div>
 
       <CreateStudent classId={classId} />
@@ -94,6 +98,10 @@ function MyComponent({ classId }) {
 
   const [started, setStarted] = useState(false);
 
+  const startClass = () => {
+    setStarted(true);
+  };
+
   if (fetching) return 'Loading...';
   if (error) return 'Something Bad Happened';
   return (
@@ -103,8 +111,16 @@ function MyComponent({ classId }) {
       {started
         && (
         <>
+          Class has started, you can direct your students to:
+          {' '}
+          {window.location.origin}
+          /
+          {data.findMyClass.code}
         </>
         )}
+
+      {!started
+      && <button type="button" onClick={() => startClass()}>Start class</button>}
 
       <ul>
         {(data.findMyClass.Buttons || [])
