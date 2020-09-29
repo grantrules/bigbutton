@@ -84,10 +84,23 @@ function ClassPage() {
   );
 }
 
-function Student({ name }) {
+function DeleteStudent({ studentId, classId, onDelete }) {
+  const DELETE_STUDENT_MUTATION = `mutation DeleteStudent($studentId: String!, $classId: String!) {
+    deleteStudent(studentId: $studentId, classId: $classId)
+  }`;
+  const [/* createClassResult */, deleteStudent] = useMutation(DELETE_STUDENT_MUTATION);
+
+  const click = () => {
+    deleteStudent({ studentId, classId }).then(() => onDelete());
+  };
+  return (<button type="button" onClick={click}>delete</button>);
+}
+
+function Student({ name, children }) {
   return (
     <li>
       {name}
+      {children}
     </li>
   );
 }
@@ -97,6 +110,18 @@ Student.propTypes = {
 Student.defaultProps = {
   name: '',
 };
+
+function MyStudent({ id, classId, name }) {
+  const [deleted, setDeleted] = useState(false);
+  if (deleted) {
+    return (<></>);
+  }
+  return (
+    <Student key={id} name={name}>
+      <DeleteStudent classId={classId} studentId={id} onDelete={() => setDeleted(true)} />
+    </Student>
+  );
+}
 
 function Button({ id, color }) {
   return (
@@ -137,7 +162,14 @@ function MyComponent({ classId }) {
 
       <ul>
         {(data.findMyClass.Students || [])
-          .map((student) => (<li key={student.id}>{student.name}</li>))}
+          .map((student) => (
+            <MyStudent
+              key={student.id}
+              name={student.name}
+              id={student.id}
+              classId={data.findMyClass.id}
+            />
+          ))}
       </ul>
     </>
   );
