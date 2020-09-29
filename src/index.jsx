@@ -43,9 +43,10 @@ app.use(
 );
 
 const notFetch = (ctx) => (_, { body }) => {
-  const { query } = JSON.parse(body);
+  const { query, variables } = JSON.parse(body);
   const result = { ok: true, json() { return Promise.resolve(this.data); }, data: {} };
-  return graphql(schema, query, {}, ctx).then((res) => { result.data = res; return result; });
+  return graphql(schema, query, {}, ctx, variables)
+    .then((res) => { result.data = res; return result; });
 };
 
 app.get('/*', async (req, res) => {
