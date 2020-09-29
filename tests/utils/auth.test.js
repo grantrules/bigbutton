@@ -3,12 +3,12 @@ import { auth, authWithUser } from '../../src/utils/auth';
 describe('authWithTeacher', () => {
   test('with teacher', () => {
     const fn = jest.fn();
-    const teacher = { name: 'grant' };
-    const ctx = { session: { teacher } };
+    const teacherId = '12345';
+    const ctx = { session: { teacherId } };
 
     const authFunc = authWithUser(fn);
     authFunc(ctx, 'hey');
-    expect(fn).toHaveBeenCalledWith(teacher, 'hey');
+    expect(fn).toHaveBeenCalledWith(teacherId, 'hey');
   });
 
   test('without teacher', () => {
@@ -25,8 +25,8 @@ describe('authWithTeacher', () => {
 describe('auth', () => {
   test('with teacher', () => {
     const fn = jest.fn();
-    const teacher = { name: 'grant' };
-    const ctx = { session: { teacher } };
+    const teacherId = '12345';
+    const ctx = { session: { teacherId } };
 
     const authFunc = auth(fn);
     authFunc(ctx, 'hey');
