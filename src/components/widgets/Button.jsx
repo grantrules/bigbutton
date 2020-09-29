@@ -59,7 +59,6 @@ function MyButton({ id, currentColor, classId }) {
       <Button id={id} color={color} />
       <DeleteButton id={id} classId={classId} onDelete={() => setDeleted(true)} />
       <UpdateButtonColor classId={classId} buttonId={id} onUpdate={setColor} />
-
     </>
   );
 }

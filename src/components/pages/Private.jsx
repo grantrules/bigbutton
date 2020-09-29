@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 
 import { useQuery, useMutation } from 'urql';
 import { Link } from 'react-router-dom';
+import { useI18N } from '../context/I18NProvider';
 
 const HOMEPAGE_QUERY = 'query { findMyClasses { id, name, code } }';
 
 function CreateClass() {
+  const { t } = useI18N();
+
   const CREATE_CLASS_MUTATION = `mutation CreateClass($name: String!) {
     createClass(name: $name) {
       name, code
@@ -24,17 +27,19 @@ function CreateClass() {
 
     <form onSubmit={handleSubmit}>
       <input name="name" value={name} onChange={(e) => setName(e.target.value)} />
-      <button type="submit">Create class</button>
+      <button type="submit">{t`Create class`}</button>
     </form>
   );
 }
 
 function TeacherPage() {
+  const { t } = useI18N();
+
   return (
     <>
-      <h1>Welcome</h1>
+      <h1>{t`Welcome`}</h1>
 
-      <h2>Begin by creating a class and adding students</h2>
+      <h2>{t`Begin by creating a class and adding students`}</h2>
       <CreateClass />
       <MyComponent />
     </>
@@ -62,10 +67,12 @@ Class.defaultProps = {
 };
 
 function MyComponent() {
+  const { t } = useI18N();
+
   const [{ data, fetching, error }/* , reexecuteQuery */] = useQuery({ query: HOMEPAGE_QUERY });
 
-  if (fetching) return (<>Loading...</>);
-  if (error) return (<>Something Bad Happened</>);
+  if (fetching) return (<>{t`Loading...`}</>);
+  if (error) return (<>{t`Something Bad Happened`}</>);
   return (
     <ul>
       {data.findMyClasses.map((cla) => (

@@ -2,8 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router';
 import Authorized from '../auth/Authorized';
 import { AuthContext } from '../context/AuthProvider';
+import { useI18N } from '../context/I18NProvider';
 
 function Login() {
+  const { t } = useI18N();
+
   const [values, setValues] = useState({ email: '', password: '' });
   const { login, loginFailed } = useContext(AuthContext);
 
@@ -22,15 +25,15 @@ function Login() {
         <Redirect to="/" />
       </Authorized>
 
-      {loginFailed && 'Failed'}
+      {loginFailed && t`Failed`}
 
       <input
         type="text"
         value={values.email}
         onChange={handleChange('email')}
         id="email"
-        label="Email Address"
-        placeholder="Email Address"
+        label={t`Email Address`}
+        placeholder={t`Email Address`}
         required
       />
       <br />
@@ -39,7 +42,7 @@ function Login() {
         value={values.password}
         onChange={handleChange('password')}
         id="standard-password-input"
-        label="Password"
+        label={t`Password`}
         type="password"
         autoComplete="current-password"
         required
@@ -47,7 +50,7 @@ function Login() {
       <br />
 
       <button type="submit">
-        Log In
+        {t`Log In`}
       </button>
     </form>
   );

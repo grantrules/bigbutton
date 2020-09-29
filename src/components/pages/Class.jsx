@@ -81,7 +81,7 @@ function ClassPage() {
 
   return (
     <>
-      <h1>{t('Class')}</h1>
+      <h1>{t`Class`}</h1>
       <div>{classId}</div>
 
       <CreateStudent classId={classId} />
@@ -92,6 +92,8 @@ function ClassPage() {
 }
 
 function MyComponent({ classId }) {
+  const { t } = useI18N();
+
   const [{ data, fetching, error }/* , reexecuteQuery */] = useQuery({
     query: HOMEPAGE_QUERY, variables: { classId },
   });
@@ -102,8 +104,8 @@ function MyComponent({ classId }) {
     setStarted(true);
   };
 
-  if (fetching) return 'Loading...';
-  if (error) return 'Something Bad Happened';
+  if (fetching) return t`Loading...`;
+  if (error) return t`Something Bad Happened`;
   return (
     <>
       <h1>{data.findMyClass.name}</h1>
@@ -111,7 +113,7 @@ function MyComponent({ classId }) {
       {started
         && (
         <>
-          Class has started, you can direct your students to:
+          {t`Class has started, you can direct your students to:`}
           {' '}
           {window.location.origin}
           /
@@ -120,7 +122,7 @@ function MyComponent({ classId }) {
         )}
 
       {!started
-      && <button type="button" onClick={() => startClass()}>Start class</button>}
+      && <button type="button" onClick={() => startClass()}>{t`Start class`}</button>}
 
       <ul>
         {(data.findMyClass.Buttons || [])
@@ -150,10 +152,7 @@ function MyComponent({ classId }) {
 }
 
 MyComponent.propTypes = {
-  classId: PropTypes.string,
-};
-MyComponent.defaultProps = {
-  classId: '',
+  classId: PropTypes.string.isRequired,
 };
 
 export default ClassPage;

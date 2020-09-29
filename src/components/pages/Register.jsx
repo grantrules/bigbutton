@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { useMutation } from 'urql';
+import { useI18N } from '../context/I18NProvider';
 import TextInput from '../widgets/TextInput';
 
 const REGISTER_QUERY = 'query Register($email: String, $password: String, $name: String, $school: String) { register(email:$email, password:$password, name:$name, school:$school) }';
 
 function Register() {
+  const { t } = useI18N();
+
   const [values, setValues] = React.useState({
     email: '', password: '', passwordconfirm: '', name: '', school: '',
   });
@@ -28,7 +31,7 @@ function Register() {
       <TextInput
         value={values.email}
         onChange={handleChange('email')}
-        label="Email"
+        label={t`Email`}
         type="email"
         id="email"
         placeholder="teacher@school.edu"
@@ -38,24 +41,24 @@ function Register() {
         value={values.name}
         onChange={handleChange('name')}
         id="name"
-        label="Your Name"
-        placeholder="Ms. Wagner"
+        label={t`Your Name`}
+        placeholder={t`Ms. Wagner`}
         required
       />
       <TextInput
         value={values.school}
         onChange={handleChange('school')}
         id="school"
-        label="School"
-        placeholder="Bayside High School"
+        label={t`School`}
+        placeholder={t`Bayside High School`}
         required
       />
       <TextInput
         value={values.password}
         onChange={handleChange('password')}
         id="password"
-        label="Password"
-        placeholder="Password"
+        label={t`Password`}
+        placeholder={t`Password`}
         type="password"
         margin="normal"
         required
@@ -64,14 +67,14 @@ function Register() {
         value={values.passwordconfirm}
         onChange={handleChange('passwordconfirm')}
         id="passwordconfirm"
-        label="Confirm Password"
-        placeholder="Password"
+        label={t`Confirm Password`}
+        placeholder={t`Password`}
         type="password"
         required
       />
 
       <button type="submit">
-        Register
+        {t`Register`}
       </button>
     </form>
   );
