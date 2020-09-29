@@ -9,5 +9,6 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['jest-enzyme'],
-  testEnvironment: 'node',
+  testEnvironment: 'enzyme',
+
 };
