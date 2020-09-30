@@ -2,5 +2,3 @@ data
 build
 dist
 node_modules
-tests
-coverage

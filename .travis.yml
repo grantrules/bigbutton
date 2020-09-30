@@ -1,5 +1,8 @@
-language: node_js
-node_js:
-  - node
+before_install:
+  - docker build -t grantrules/bigbutton .
+scripts:
+  - docker run -it -v "$PWD/coverage:/usr/src/app/coverage" grantrules/bigbutton npm run test
 after_script:
   - bash <(curl -s https://codecov.io/bash) 
+services:
+  - docker
