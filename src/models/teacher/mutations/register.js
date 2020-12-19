@@ -19,7 +19,7 @@ export default {
     {
       name, email, school, password,
     },
-  ) => hash(password).then((pass) => TeacherModel.create({
+  ) => hash(password).then((pass) => !!TeacherModel.create({
     name, email, school, password: pass,
   })),
 };

@@ -4,7 +4,7 @@ import { useMutation } from 'urql';
 import { useI18N } from '../context/I18NProvider';
 import TextInput from '../widgets/TextInput';
 
-const REGISTER_QUERY = 'query Register($email: String, $password: String, $name: String, $school: String) { register(email:$email, password:$password, name:$name, school:$school) }';
+const REGISTER_QUERY = 'mutation Register($email: String, $password: String, $name: String, $school: String) { register(email:$email, password:$password, name:$name, school:$school) }';
 
 function Register() {
   const { t } = useI18N();
