@@ -14,6 +14,6 @@ export default {
   },
   resolve:
     async (v, args, ctx) => ClassModel.create({
-      TeacherId: ctx.session.teacherId, name: args.name, code: generateId(),
+      fk_teacher_id: ctx.session.teacherId, name: args.name, code: generateId(),
     }),
 };

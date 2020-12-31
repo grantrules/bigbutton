@@ -16,7 +16,9 @@ export default (sequelize) => {
     sequelize, // We need to pass the connection instance
     modelName: 'Teacher', // We need to choose the model name
   });
-  TeacherModel.hasMany(Class, { as: 'classes' });
+  TeacherModel.hasMany(Class, { as: 'classes', foreignKey: 'fk_teacher_id' });
+  Class.belongsTo(TeacherModel, { foreignKey: 'fk_teacher_id' });
+
   hash('doink')
     .then((h) => TeacherModel.create({
       email: 'gharding@gmail.com',
