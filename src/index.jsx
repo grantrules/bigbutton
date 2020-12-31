@@ -1,12 +1,15 @@
 import express from 'express';
+import ws from 'ws';
+import http from 'http';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import redis from 'redis';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import prepass from 'react-ssr-prepass';
+import { useServer } from 'graphql-ws/lib/use/ws';
 
-import { graphql } from 'graphql';
+import { graphql, execute, subscribe } from 'graphql';
 import ServerApp from './components/apps/ServerApp';
 import html from './html';
 import createClient from './middleware/graphql/createClient';
@@ -23,7 +26,10 @@ const RedisStore = connectRedis(session);
 const redisClient = redis.createClient('redis://redis');
 
 app.use(session({
-  store: new RedisStore({ client: redisClient }), secret: 'keyboard cat', resave: false, saveUninitialized: false,
+  store: new RedisStore({ client: redisClient }),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
 }));
 
 app.use(
@@ -64,4 +70,22 @@ app.get('/*', async (req, res) => {
 });
 
 const port = 3000;
+
+const server = http.createServer(app);
+
+const wsServer = new ws.Server({
+  server,
+  path: '/graphql',
+});
+
+server.listen(443, () => {
+  useServer(
+    {
+      schema,
+      execute,
+      subscribe,
+    },
+    wsServer,
+  );
+});
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

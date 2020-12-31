@@ -14,6 +14,7 @@ import studentQueries from './models/student/queries';
 import studentMutations from './models/student/mutations';
 
 import buttonMutations from './models/button/mutations';
+import subscriptions from './subscriptions';
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -46,6 +47,12 @@ export default new GraphQLSchema({
       ...classMutations,
       ...studentMutations,
       ...buttonMutations,
+    },
+  }),
+  subscription: new GraphQLObjectType({
+    name: 'Subscription',
+    fields: {
+      ...subscriptions,
     },
   }),
 });
