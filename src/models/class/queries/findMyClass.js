@@ -14,7 +14,7 @@ export default {
   },
   resolve:
     async (v, { classId }, ctx) => ClassModel.findOne({
-      where: { id: classId, TeacherId: ctx.session.teacherId },
+      where: { id: classId, fk_teacher_id: ctx.session.teacherId },
       include: [Button, Student],
     }),
 };

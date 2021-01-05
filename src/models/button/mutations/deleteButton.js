@@ -15,7 +15,7 @@ export default {
   },
   resolve:
     (v, args, ctx) => ClassModel.findOne({
-      where: { id: args.classId, TeacherId: ctx.session.teacherId },
+      where: { id: args.classId, fk_teacher_id: ctx.session.teacherId },
       include: [ButtonModel],
     })
       .then((cl) => cl.Buttons

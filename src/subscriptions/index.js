@@ -1,3 +1,3 @@
-// import click from './click';
+import click from './click';
 
-export default { /* click */ };
+export default { click };

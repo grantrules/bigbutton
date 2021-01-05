@@ -10,5 +10,5 @@ export default {
   args: {
   },
   resolve:
-    async (v, args, ctx) => ClassModel.findAll({ where: { TeacherId: ctx.session.teacherId } }),
+    async (v, args, ctx) => ClassModel.findAll({ where: { fk_teacher_id: ctx.session.teacherId } }),
 };
