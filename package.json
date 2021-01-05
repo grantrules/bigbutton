@@ -8,7 +8,7 @@
     "build": "npx babel src -d build && npx webpack",
     "start": "node build/index.js",
     "dev:build": "npx babel -w src -d build &",
-    "dev:start": "npx nodemon build/index.js &"
+    "dev:start": "npx nodemon --watch build build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,11 @@
     "express": "^4.17.1",
     "express-graphql": "^0.11.0",
     "express-session": "^1.17.1",
-    "graphql": "^15.3.0",
+    "express-ws": "^4.0.0",
+    "graphql": "^15.4.0",
+    "graphql-redis-subscriptions": "^2.3.1",
+    "graphql-subscriptions": "^1.1.0",
+    "graphql-ws": "^3.2.0",
     "nanoid": "^3.1.12",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
@@ -32,8 +36,8 @@
     "react-ssr-prepass": "^1.2.1",
     "redis": "^3.0.2",
     "sequelize": "^6.3.5",
-    "subscriptions-transport-ws": "^0.9.18",
-    "urql": "^1.10.1"
+    "urql": "^1.10.1",
+    "ws": "^7.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -56,7 +60,7 @@
     "jest": "^26.4.2",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
-    "nodemon": "^1.18.11",
+    "nodemon": "^1.19.4",
     "sequelize-cli": "^5.5.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
