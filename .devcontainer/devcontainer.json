@@ -1,0 +1,17 @@
+{
+	"name": "BigButton",
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"
+	],
+	"service": "server",
+	"workspaceFolder": "/usr/src/app",
+	"settings": {
+		"terminal.integrated.shell.linux": null
+	},
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"ms-azuretools.vscode-docker"
+	],
+	"forwardPorts": [3000],
+}
