@@ -5,9 +5,11 @@ import { useQuery } from 'urql';
 import { useParams } from 'react-router-dom';
 import { useI18N } from '../context/I18NProvider';
 import { useStore } from '../context/StoreProvider';
-import { MyButton } from '../widgets/Button';
+import { Button } from '../widgets/Button';
 
 const CLASSROOM_QUERY = 'query ($code: String!) { findClassByCode(code: $code) { id, name, code, Teacher { name }, Students { id, name }, Buttons { id, color } } }';
+
+const CLICK_MUTATION = `mutation ($id: Integer!) { }`
 
 function StudentEntry() {
   const store = useStore();
@@ -56,10 +58,9 @@ function ClassroomPage() {
         {studentName
         && (data.findClassByCode.Buttons || [])
           .map(({ id, color }) => (
-            <MyButton
+            <Button
               id={id}
-              classId={data.findClassByCode.id}
-              currentColor={color}
+              color={color}
               key={id}
             />
           ))}
