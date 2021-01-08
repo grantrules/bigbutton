@@ -7,14 +7,13 @@ import pubsub from '../../../middleware/graphql/pubsub';
 export default {
   type: GraphQLBoolean,
   args: {
-    classId: { type: GraphQLString },
     buttonId: { type: GraphQLString },
-    clickOn: { type: GraphQLBoolean },
+    buttonState: { type: GraphQLBoolean },
   },
   resolve:
-    async (v, { classId, buttonId, clickOn }) => {
+    async (v, args) => {
       try {
-        await pubsub.publish('clicked', { classId, buttonId, clickOn });
+        await pubsub.publish('clicked', args);
         return true;
       } catch (e) {
         console.log(e);

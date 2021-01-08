@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useQuery } from 'urql';
+import { useMutation, useQuery } from 'urql';
 import { useParams } from 'react-router-dom';
 import { useI18N } from '../context/I18NProvider';
 import { useStore } from '../context/StoreProvider';
@@ -9,7 +9,7 @@ import { Button } from '../widgets/Button';
 
 const CLASSROOM_QUERY = 'query ($code: String!) { findClassByCode(code: $code) { id, name, code, Teacher { name }, Students { id, name }, Buttons { id, color } } }';
 
-const CLICK_MUTATION = `mutation ($id: Integer!) { }`
+const CLICK_MUTATION = 'mutation ($id: Integer!) { click(classId: $classId, buttonId: $buttonId, buttonState: $buttonState ) }';
 
 function StudentEntry() {
   const store = useStore();
@@ -46,19 +46,25 @@ function ClassroomPage() {
     query: CLASSROOM_QUERY, variables: { code },
   });
 
+  const [click] = useMutation(CLICK_MUTATION);
   const studentName = store.use(() => store.get('studentName'));
-
+  const buttonClick = (buttonId) => () => click({ buttonId, buttonState: true });
+  const setName = (name) => () => {
+    store.set('studentName', name);
+  };
   if (data) {
     return (
       <>
         <h1>{t`This is a class`}</h1>
         <h2>{data.findClassByCode.name}</h2>
         {!studentName
-          && <StudentEntry />}
+          && data.findClassByCode.Students?.map(({ name }) => (
+            <button type="button" onClick={setName(name)}>{name}</button>
+          ))}
         {studentName
-        && (data.findClassByCode.Buttons || [])
-          .map(({ id, color }) => (
+          && data.findClassByCode.Buttons?.map(({ id, color }) => (
             <Button
+              onClick={buttonClick(id)}
               id={id}
               color={color}
               key={id}
