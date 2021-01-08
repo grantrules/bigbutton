@@ -1,4 +1,3 @@
-language: node_js
 before_install:
   - docker build -t grantrules/bigbutton .
 scripts:
