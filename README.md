@@ -4,6 +4,6 @@
 
 BigButton is a multifunction voice output device for remote learning
 
-# Developing
+## Developing
 
 BigButton makes use of Dev Containers in VS Code with the Remote Container extension. With Docker installed and the Remote Container intension installed, VS Code should prompt to reopen in dev container. Once inside the container there are two VS Code tasks to run to start the app, `npm: build` and `npm: dev:start`.
