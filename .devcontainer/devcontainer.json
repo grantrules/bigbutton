@@ -13,5 +13,6 @@
 		"dbaeumer.vscode-eslint",
 		"ms-azuretools.vscode-docker"
 	],
+	"postCreateCommand": "npm i",
 	"forwardPorts": [3000],
 }

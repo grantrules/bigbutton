@@ -8,7 +8,9 @@
     "build": "npx babel src -d build && npx webpack",
     "start": "node build/index.js",
     "dev:build": "npx babel -w src -d build &",
-    "dev:start": "npx nodemon --watch build build/index.js"
+    "dev:start": "npx nodemon --exec babel-node build/index.js",
+    "dev:serverwatch": "npx nodemon --watch src --exec babel-node src/index.jsx",
+    "dev:appwatch": "npx webpack -w"
   },
   "keywords": [],
   "author": "Grant Harding",
@@ -42,6 +44,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
     "@babel/plugin-proposal-optional-chaining": "^7.12.7",

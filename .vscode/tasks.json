@@ -15,6 +15,22 @@
 			"problemMatcher": [],
 			"label": "npm: dev:start",
 			"detail": "npx nodemon --watch build build/index.js"
+		},
+		{
+			"type": "npm",
+			"script": "dev:appwatch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: dev:appwatch",
+			"detail": "npx webpack -w"
+		},
+		{
+			"type": "npm",
+			"script": "dev:serverwatch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: dev:serverwatch",
+			"detail": "npx nodemon --watch src --exec babel-node src/index.jsx"
 		}
 	]
 }
