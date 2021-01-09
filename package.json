@@ -8,9 +8,7 @@
     "build": "npx babel src -d build && npx webpack",
     "start": "node build/index.js",
     "dev:build": "npx babel -w src -d build &",
-    "dev:start": "npx nodemon --exec babel-node build/index.js",
-    "dev:serverwatch": "npx nodemon --watch src --exec babel-node src/index.jsx",
-    "dev:appwatch": "npx webpack -w"
+    "dev:start": "npx nodemon build/index.js"
   },
   "keywords": [],
   "author": "Grant Harding",
@@ -53,7 +51,6 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/runtime": "^7.12.5",
     "babel-jest": "^26.6.3",
-    "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^7.17.0",
