@@ -58,8 +58,8 @@ function ClassroomPage() {
         <h1>{t`This is a class`}</h1>
         <h2>{data.findClassByCode.name}</h2>
         {!studentName
-          && data.findClassByCode.Students?.map(({ name }) => (
-            <button type="button" onClick={setName(name)}>{name}</button>
+          && data.findClassByCode.Students?.map(({ name, id }) => (
+            <button key={id} type="button" onClick={setName(name)}>{name}</button>
           ))}
         {studentName
           && data.findClassByCode.Buttons?.map(({ id, color }) => (
