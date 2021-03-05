@@ -1,3 +1,4 @@
 import createClass from './createClass';
+import toggleStart from './toggleStart';
 
-export default { createClass };
+export default { createClass, toggleStart };
