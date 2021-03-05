@@ -9,7 +9,9 @@ import { MyStudent } from '../widgets/Student';
 import { useI18N } from '../context/I18NProvider';
 import AudioRecorder from '../widgets/AudioRecorder';
 
-const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, code, Students { id, name }, Buttons { id, color } } }';
+const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, code, started, Students { id, name }, Buttons { id, color } } }';
+
+const TOGGLE_START_MUTATION = 'mutation StartClass($classId: String!) { toggleStart(classId: $classId) }';
 
 function CreateStudent({ classId, callback }) {
   const CREATE_STUDENT_MUTATION = `mutation CreateStudent($name: String!, $classId: String!) {
@@ -103,10 +105,12 @@ function MyComponent({ classId }) {
     query: HOMEPAGE_QUERY, variables: { classId },
   });
 
-  const [started, setStarted] = useState(false);
+  const [toggleResult, toggleStartMutation] = useMutation(TOGGLE_START_MUTATION);
 
-  const startClass = () => {
-    setStarted(true);
+  const started = toggleResult.data?.toggleStart ?? data.findMyClass?.started ?? false;
+
+  const toggleStart = () => {
+    toggleStartMutation({ classId });
   };
 
   if (fetching) return t`Loading...`;
@@ -122,15 +126,12 @@ function MyComponent({ classId }) {
         && (
         <>
           {t`Class has started, you can direct your students to:`}
-          {' '}
-          {window.location.origin}
           /
           {data.findMyClass.code}
         </>
         )}
 
-      {!started
-      && <button type="button" onClick={() => startClass()}>{t`Start class`}</button>}
+      <button type="button" onClick={() => toggleStart()}>{started ? t`Stop class` : t`Start class`}</button>
 
       <ul>
         {(data.findMyClass.Buttons || [])
