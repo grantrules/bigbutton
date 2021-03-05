@@ -8,7 +8,7 @@
     "build": "npx babel src -d build && npx webpack",
     "start": "node build/index.js",
     "dev:build": "npx babel -w src -d build &",
-    "dev:start": "npx nodemon build/index.js"
+    "dev:start": "npx nodemon --watch build build/index.js"
   },
   "keywords": [],
   "author": "Grant Harding",
