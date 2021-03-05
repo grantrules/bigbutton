@@ -8,6 +8,7 @@ export default (sequelize) => {
     id: sequelize.idType,
     name: { type: DataTypes.TEXT },
     code: { type: DataTypes.TEXT },
+    started: { type: DataTypes.BOOLEAN, defaultValue: false },
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance

@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLList,
   GraphQLObjectType,
   GraphQLString,
@@ -19,6 +20,9 @@ const ClassType = new GraphQLObjectType({
     },
     code: {
       type: GraphQLString,
+    },
+    started: {
+      type: GraphQLBoolean,
     },
     Students: {
       type: GraphQLList(StudentType),
