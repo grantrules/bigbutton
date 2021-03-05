@@ -1,29 +1,21 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useReactMediaRecorder } from "react-media-recorder";
 
-function AudioRecorder({ id }) {
-  const [recording, setRecording] = useState(false);
+const AudioRecorder = function() {
+  const {
+    status,
+    startRecording,
+    stopRecording,
+    mediaBlobUrl,
+  } = useReactMediaRecorder({ audio: true });
 
-  const record = () => {
-    if (recording) {
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then((stream) => {
-          const mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.start();
-        });
-    }
-    setRecording(!recording);
-  };
-
-  return (<button type="button" onClick={() => record()}>{recording ? 'Stop' : 'Record'}</button>);
-}
-
-AudioRecorder.propTypes = {
-  id: PropTypes.number,
+  return (
+    <div>
+      <p>{status}</p>
+      <button type="button" onClick={startRecording}>Start Recording</button>
+      <button type="button" onClick={stopRecording}>Stop Recording</button>
+      <audio src={mediaBlobUrl} controls autoplay loop />
+    </div>
+  );
 };
-
-AudioRecorder.defaultProps = {
-  id: 0,
-};
-
 export default AudioRecorder;

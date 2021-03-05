@@ -7,10 +7,11 @@ import { useParams } from 'react-router';
 import { MyButton } from '../widgets/Button';
 import { MyStudent } from '../widgets/Student';
 import { useI18N } from '../context/I18NProvider';
+import AudioRecorder from '../widgets/AudioRecorder';
 
 const HOMEPAGE_QUERY = 'query ($classId: String!) { findMyClass(classId: $classId) { id, name, code, Students { id, name }, Buttons { id, color } } }';
 
-function CreateStudent({ classId }) {
+function CreateStudent({ classId, callback }) {
   const CREATE_STUDENT_MUTATION = `mutation CreateStudent($name: String!, $classId: String!) {
     createStudent(name: $name, classId: $classId) {
       name
@@ -22,6 +23,7 @@ function CreateStudent({ classId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     createStudent({ name, classId });
+    callback();
   };
 
   return (
@@ -35,12 +37,14 @@ function CreateStudent({ classId }) {
 
 CreateStudent.propTypes = {
   classId: PropTypes.string,
+  callback: PropTypes.func,
 };
 CreateStudent.defaultProps = {
   classId: '',
+  callback: () => {},
 };
 
-function CreateButton({ classId }) {
+function CreateButton({ classId, callback }) {
   const CREATE_BUTTON_MUTATION = `mutation CreateButton($color: String!, $classId: String!) {
     createButton(color: $color, classId: $classId) {
       id, color
@@ -52,6 +56,7 @@ function CreateButton({ classId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     createButton({ color, classId });
+    callback();
   };
 
   return (
@@ -69,9 +74,11 @@ function CreateButton({ classId }) {
 
 CreateButton.propTypes = {
   classId: PropTypes.string,
+  callback: PropTypes.func,
 };
 CreateButton.defaultProps = {
   classId: '',
+  callback: () => {},
 };
 
 function ClassPage() {
@@ -84,8 +91,6 @@ function ClassPage() {
       <h1>{t`Class`}</h1>
       <div>{classId}</div>
 
-      <CreateStudent classId={classId} />
-      <CreateButton classId={classId} />
       <MyComponent classId={classId} />
     </>
   );
@@ -94,7 +99,7 @@ function ClassPage() {
 function MyComponent({ classId }) {
   const { t } = useI18N();
 
-  const [{ data, fetching, error }/* , reexecuteQuery */] = useQuery({
+  const [{ data, fetching, error }, reexecuteQuery] = useQuery({
     query: HOMEPAGE_QUERY, variables: { classId },
   });
 
@@ -109,6 +114,9 @@ function MyComponent({ classId }) {
   return (
     <>
       <h1>{data.findMyClass.name}</h1>
+
+      <CreateStudent classId={classId} callback={() => reexecuteQuery()} />
+      <CreateButton classId={classId} callback={() => reexecuteQuery()} />
 
       {started
         && (
@@ -127,12 +135,14 @@ function MyComponent({ classId }) {
       <ul>
         {(data.findMyClass.Buttons || [])
           .map(({ id, color }) => (
-            <MyButton
-              id={id}
-              classId={data.findMyClass.id}
-              currentColor={color}
-              key={id}
-            />
+            <li key={id}>
+              <MyButton
+                id={id}
+                classId={data.findMyClass.id}
+                currentColor={color}
+              />
+              <AudioRecorder id={id} />
+            </li>
           ))}
       </ul>
 
