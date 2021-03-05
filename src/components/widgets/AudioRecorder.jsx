@@ -14,7 +14,7 @@ const AudioRecorder = function() {
       <p>{status}</p>
       <button type="button" onClick={startRecording}>Start Recording</button>
       <button type="button" onClick={stopRecording}>Stop Recording</button>
-      <audio src={mediaBlobUrl} controls autoplay loop />
+      <audio src={mediaBlobUrl} controls autoPlay loop />
     </div>
   );
 };
